@@ -28,3 +28,15 @@ body {
     grid-template-columns: 9fr 3fr;
     gap: 10px
 }
+
+.search-bar input {
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.search-bar button {
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+}
