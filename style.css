@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(#ff4554 50%, #00c3e3 50%);
+}
+
+.container {
+    background-color: #414548;
+    padding: 35px 20px;
+    width: 90vw;
+    max-width: 512px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 12px;
+}
+
+.search-bar {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 9fr 3fr;
+    gap: 10px
+}
