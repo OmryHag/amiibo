@@ -1,10 +1,15 @@
 const apiURL = 'https://www.amiiboapi.com/api/amiibo/'
 
+// get HTML elements
+
 const searchBar = document.querySelector('.search-box');
 const searchInput = document.querySelector('.search-input');
 const searchButton = document.getElementById('search-button');
 const resultContainer = document.querySelector('.result-container');
 const results = document.querySelector('.results');
+
+
+// event listeners
 
 searchButton.addEventListener('click', searchAmiibo);
 searchInput.addEventListener('keydown', (event) => {
@@ -28,7 +33,7 @@ function searchAmiibo() {
     // TODO: add loader
     fetch(apiURL + `?name=${userInput}`).then(response => response.json()).then(data => {
         if (data.hasOwnProperty('code') && data.code === 404) {
-            resultContainer.innerHTML = `
+            results.innerHTML = `
                 <h3>No Amiibo was found, please check your spelling</h3>
             `
         }
@@ -36,13 +41,24 @@ function searchAmiibo() {
         console.log(amiibo);
         results.innerHTML = `
             ${amiibo.map(amiibo => {
-                const {character, image} = amiibo;
+                const {character, image, amiiboSeries} = amiibo;
                 return (
                     `<li class="amiibo-item">
                         <img src="${image}" alt="${character}">
-                    ${character}</li>`
+                        <span class="description">
+                        ${character} - ${amiiboSeries}
+                        </span>
+                    </li>`
                 )
             }).join('')}
         `
+
+        const itemDescriptions = document.querySelectorAll('.description');
+
+        Array.from(itemDescriptions).map(description => description.addEventListener('click', (event) => handleItemClick(event)))
     })
+}
+
+function handleItemClick(event) {
+    console.log(event.target);
 }
