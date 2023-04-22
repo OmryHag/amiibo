@@ -61,9 +61,26 @@ body {
 
 [class*="description"] {
     cursor: pointer;
+    font-size: 20px;
 }
 
 .amiibo-item img {
     width: 36px;
     margin-left: 16px;
+}
+
+.result {
+    display: grid;
+    color: white;
+    align-items: center;
+    /* justify-content: center; */
+    width: 100%;
+    padding-left: 24px;
+    gap: 8px;
+    padding-top: 16px;
+}
+
+.result img {
+    width: 120px;
+    text-align: center;
 }

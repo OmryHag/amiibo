@@ -7,6 +7,7 @@ const searchInput = document.querySelector('.search-input');
 const searchButton = document.getElementById('search-button');
 const resultContainer = document.querySelector('.result-container');
 const results = document.querySelector('.results');
+const result = document.querySelector('.result');
 
 
 // event listeners
@@ -20,15 +21,15 @@ searchInput.addEventListener('keydown', (event) => {
 })
 
 function searchAmiibo() {
+    results.style.display = 'block';
+    result.style.display = 'none';
     const userInput = searchInput.value.trim();
     if (!userInput) {
-        resultContainer.innerHTML = `
+        results.innerHTML = `
             <h3>Input must not be empty!</h3>
         `
         return;
     }
-
-    console.log(userInput);
     
     // TODO: add loader
     fetch(apiURL + `?name=${userInput}`).then(response => response.json()).then(data => {
@@ -43,7 +44,7 @@ function searchAmiibo() {
             const {character, image, amiiboSeries} = amiibo;
             return (
                 `<li class="amiibo-item">
-                    <img src="${image}" alt="${character}">
+                    <img src="${image}" alt="${character}"/>
                     <span class="description-${index}">
                     ${character} - ${amiiboSeries}
                     </span>
@@ -51,16 +52,28 @@ function searchAmiibo() {
             )
         }).join('')}
     `
-        console.log(amiibo);
         results.innerHTML = itemListHTML;
 
         const itemDescriptions = document.querySelectorAll('[class*="description"]');
 
-        Array.from(itemDescriptions).map(description => description.addEventListener('click', (event) => handleItemClick(event)))
+        Array.from(itemDescriptions).map(description => description.addEventListener('click', (event) => {
+            const itemClassName = event.target.className;
+            const itemIndex = itemClassName.split('-')[1];
+            handleItemClick(amiibo[itemIndex]);
+            results.style.display = 'none';
+        }
+            ))
     })
 }
 
-function handleItemClick(event) {
-    const itemDescription = 
-    console.log(event.target.className);
+function handleItemClick(item) {
+    result.style.display = 'grid';
+    const { image, character, gameSeries, amiiboSeries } = item;
+    result.innerHTML = `
+        <img src="${image}" alt="${character}"/>
+        <span class="character-name">Character: ${character}</span>
+        <span class="game-series">Game: ${gameSeries}</span>
+        <span class="amiibo-series">Amiibo: ${amiiboSeries}</span>
+
+    `
 }
