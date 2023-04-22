@@ -25,45 +25,46 @@ function searchAmiibo() {
     result.style.display = 'none';
     const userInput = searchInput.value.trim();
     if (!userInput) {
-        results.innerHTML = `
-            <h3>Input must not be empty!</h3>
-        `
+        results.innerHTML = `<h3>Input must not be empty!</h3>`
         return;
     }
     
     // TODO: add loader
-    fetch(apiURL + `?name=${userInput}`).then(response => response.json()).then(data => {
-        if (data.hasOwnProperty('code') && data.code === 404) {
-            results.innerHTML = `
-                <h3>No Amiibo was found, please check your spelling</h3>
-            `
-        }
-        const {amiibo} = data;
-        const itemListHTML = `
-        ${amiibo.map((amiibo, index) => {
-            const {character, image, amiiboSeries} = amiibo;
-            return (
-                `<li class="amiibo-item">
-                    <img src="${image}" alt="${character}"/>
-                    <span class="description-${index}">
-                    ${character} - ${amiiboSeries}
-                    </span>
-                </li>`
-            )
-        }).join('')}
-    `
-        results.innerHTML = itemListHTML;
+    fetch(apiURL + `?name=${userInput}`).then(response => response.json()).then(data => handleFetch(data))
+}
 
-        const itemDescriptions = document.querySelectorAll('[class*="description"]');
+function handleFetch(data) {
+    if (data.hasOwnProperty('code') && data.code === 404) {
+        results.innerHTML = `<h3>No Amiibo was found, please check your spelling</h3>`
+    }
 
-        Array.from(itemDescriptions).map(description => description.addEventListener('click', (event) => {
-            const itemClassName = event.target.className;
-            const itemIndex = itemClassName.split('-')[1];
-            handleItemClick(amiibo[itemIndex]);
-            results.style.display = 'none';
-        }
-            ))
-    })
+    const {amiibo} = data;
+    const itemListHTML = `${amiibo.map((amiibo, index) => {
+        const {character, image, amiiboSeries} = amiibo;
+        return (
+            `<li class="amiibo-item">
+                <img src="${image}" alt="${character}"/>
+                <span class="description-${index}">
+                ${character} - ${amiiboSeries}
+                </span>
+            </li>`
+        )
+    }).join('')}`
+    results.innerHTML = itemListHTML;
+
+    addListenersToDescription(amiibo);
+}
+
+function addListenersToDescription(amiibo) {
+    const itemDescriptions = document.querySelectorAll('[class*="description"]');
+
+    Array.from(itemDescriptions).map(description => description.addEventListener('click', (event) => {
+        const itemClassName = event.target.className;
+        const itemIndex = itemClassName.split('-')[1];
+        handleItemClick(amiibo[itemIndex]);
+        results.style.display = 'none';
+     }
+    ))
 }
 
 function handleItemClick(item) {

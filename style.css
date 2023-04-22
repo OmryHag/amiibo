@@ -73,7 +73,6 @@ body {
     display: grid;
     color: white;
     align-items: center;
-    /* justify-content: center; */
     width: 100%;
     padding-left: 24px;
     gap: 8px;
