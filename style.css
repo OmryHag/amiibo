@@ -59,7 +59,7 @@ body {
     color: white;
 }
 
-.description {
+[class*="description"] {
     cursor: pointer;
 }
 

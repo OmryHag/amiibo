@@ -38,27 +38,29 @@ function searchAmiibo() {
             `
         }
         const {amiibo} = data;
+        const itemListHTML = `
+        ${amiibo.map((amiibo, index) => {
+            const {character, image, amiiboSeries} = amiibo;
+            return (
+                `<li class="amiibo-item">
+                    <img src="${image}" alt="${character}">
+                    <span class="description-${index}">
+                    ${character} - ${amiiboSeries}
+                    </span>
+                </li>`
+            )
+        }).join('')}
+    `
         console.log(amiibo);
-        results.innerHTML = `
-            ${amiibo.map(amiibo => {
-                const {character, image, amiiboSeries} = amiibo;
-                return (
-                    `<li class="amiibo-item">
-                        <img src="${image}" alt="${character}">
-                        <span class="description">
-                        ${character} - ${amiiboSeries}
-                        </span>
-                    </li>`
-                )
-            }).join('')}
-        `
+        results.innerHTML = itemListHTML;
 
-        const itemDescriptions = document.querySelectorAll('.description');
+        const itemDescriptions = document.querySelectorAll('[class*="description"]');
 
         Array.from(itemDescriptions).map(description => description.addEventListener('click', (event) => handleItemClick(event)))
     })
 }
 
 function handleItemClick(event) {
-    console.log(event.target);
+    const itemDescription = 
+    console.log(event.target.className);
 }
