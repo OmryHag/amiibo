@@ -21,6 +21,7 @@ searchInput.addEventListener('keydown', (event) => {
 })
 
 function searchAmiibo() {
+    results.innerHTML = '<div class="loading"></div>'
     results.style.display = 'block';
     result.style.display = 'none';
     const userInput = searchInput.value.trim();
@@ -36,6 +37,7 @@ function searchAmiibo() {
 function handleFetch(data) {
     if (data.hasOwnProperty('code') && data.code === 404) {
         results.innerHTML = `<h3>No Amiibo was found, please check your spelling</h3>`
+        return;
     }
 
     const {amiibo} = data;
