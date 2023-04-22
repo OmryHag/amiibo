@@ -33,10 +33,32 @@ body {
     border-radius: 6px;
     padding: 8px;
     font-size: 16px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
 }
 
 .search-bar button {
     border-radius: 6px;
     font-size: 16px;
     font-weight: 500;
+    background-color: #ff4554 ;
+}
+
+.results {
+     margin: 8px 4px;
+     list-style-type: none;
+}
+
+.amiibo-item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3fr 10fr;
+    height: 100px;
+    align-items: center;
+}
+
+.amiibo-item img {
+    width: 36px;
+    margin-left: 16px;
 }
